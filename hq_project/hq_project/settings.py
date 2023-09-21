@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'embed_video',
     'rest_framework',
     'lessons.apps.LessonsConfig',
-    'products.apps.ProductsConfig',
 ]
 
 MIDDLEWARE = [
