@@ -13,7 +13,7 @@ class CombinedDataView(APIView):
 
     def get(self, request, pk=None):
         reset_queries()
-        sql_query = f"""SELECT ls.id, ls.name, ls.video_url, 
+        sql_query = f"""SELECT DISTINCT ls.id, ls.name, ls.video_url, 
                         ls.duration, lsview.view_time, lsview.last_viewed_date
                         FROM lessons_lesson ls, lessons_product_lessons pr_ls, lessons_product pr, lessons_access acs
                         LEFT OUTER JOIN lessons_lessonview lsview ON lsview.user_id = %s AND
@@ -26,7 +26,7 @@ class CombinedDataView(APIView):
             lessons = Lesson.objects.raw(
                 sql_query, [request.user.id, request.user.id])
         else:
-            sql_query += 'AND ls.id = %s'
+            sql_query += 'AND pr.id = %s'
             lessons = Lesson.objects.raw(
                 sql_query, [request.user.id, request.user.id, pk])
 
